@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Brosur Online - Cek Harga & Order</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --light-gray: #f4f7f9;
+            --dark-gray: #7f8c8d;
+            --white: #ffffff;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-container,
+        .info-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .form-section,
+        .summary-section {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--dark-gray);
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: all 0.2s ease-in-out;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+        }
+
+        .summary-box {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 1.05em;
+            gap: 10px;
+        }
+
+        .summary-item .label {
+            color: var(--dark-gray);
+        }
+
+        .summary-item .value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .summary-info {
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            margin-top: -5px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        #orderButton {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--white);
+            background-color: var(--success-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            margin-top: 10px;
+        }
+
+        #orderButton:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .info-container {
+            padding-top: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background-color: #e8f4fd;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .info-item h4 {
+            margin-top: 0;
+            font-size: 1.1em;
+            color: #1a5276;
+        }
+
+        .info-item p {
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        .warning-text {
+            color: var(--danger-color);
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 8px;
+            background-color: #fdedec;
+            border: 1px solid var(--danger-color);
+            min-height: 20px;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.2s linear;
+        }
+
+        .warning-text.show {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="form-section">
+            <div class="logo"><img src="logo.png" alt="Logo Usaha"></div>
+            <h1>Pesan Brosur Anda</h1>
+            <p class="subtitle">Pilih jenis produk dan isi form untuk melihat harga.</p>
+
+            <form id="priceCalculator">
+                <h3>1. Data Pelanggan</h3>
+                <div class="form-group"><label for="nama">Nama Anda</label><input type="text" id="nama" placeholder="Contoh: Budi Santoso" required></div>
+                <div class="form-group"><label for="kontak">No. WhatsApp / Email</label><input type="text" id="kontak" placeholder="Contoh: 08123456789" required></div>
+
+                <h3>2. Spesifikasi Brosur</h3>
+                <div class="form-group"><label for="produk">Pilih Jenis Produk</label><select id="produk">
+                        <option value="A4-flat">Brosur A4 (Tanpa Lipat)</option>
+                        <option value="A3-flat">Brosur A3 (Tanpa Lipat)</option>
+                        <option value="DL-flat">Flyer / Brosur DL (Tanpa Lipat)</option>
+                        <option value="A3-lipat2">Brosur A3 Lipat 2 (Hasil Jadi A4)</option>
+                        <option value="A4-lipat2">Brosur A4 Lipat 2 (Hasil Jadi A5)</option>
+                        <option value="A4-lipat3">Brosur A4 Lipat 3 (Hasil Jadi DL)</option>
+                    </select></div>
+                <div class="form-group"><label for="bahan">Bahan Kertas</label><select id="bahan">
+                        <option value="150gsm">Art Paper 150gsm</option>
+                        <option value="210gsm">Art Paper 210gsm</option>
+                    </select></div>
+                <div class="form-group"><label for="spesifikasi">Finishing Cetak</label><select id="spesifikasi"></select></div>
+                <div class="form-group"><label for="jumlah">Jumlah Order (pcs)</label><input type="number" id="jumlah" value="200" min="1"></div>
+            </form>
+        </div>
+
+        <div class="summary-section">
+            <h2>Ringkasan Pesanan</h2>
+            <div class="image-container"><img id="brochureImage" src="a4.png" alt="Ukuran Brosur"></div>
+            <div class="summary-box">
+                <div id="summaryContent">
+                    <p style="text-align:center; color: var(--dark-gray);">Silakan lengkapi form.</p>
+                </div>
+                <div class="total-price summary-item">
+                    <span class="label">Total Harga:</span>
+                    <span class="value" id="totalHarga">Rp 0</span>
+                </div>
+            </div>
+            <div id="minOrderWarning" class="warning-text"></div>
+            <button id="orderButton" disabled>Lengkapi Data Dulu</button>
+        </div>
+    </div>
+
+    <div class="info-container">
+        <h2>💡 Info Penting</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <h4>Produk Lipat</h4>
+                <p>Untuk semua produk lipat, spesifikasi cetak harus bolak-balik (2 Sisi). Sistem kami telah menyesuaikan pilihan secara otomatis untuk Anda.</p>
+            </div>
+            <div class="info-item">
+                <h4>Fungsi Laminasi (Lam)</h4>
+                <p><strong>Glossy</strong> untuk hasil mengkilap dan warna cerah. <strong>Doff/Matte</strong> untuk hasil elegan, mewah, dan tidak memantulkan cahaya. Laminasi juga membuat brosur lebih awet.</p>
+            </div>
+            <div class="info-item">
+                <h4>File Desain Siap Cetak</h4>
+                <p>Pastikan file desain Anda memiliki resolusi tinggi (300 DPI) dalam format PDF. Beri 'lebih' atau <i>bleed</i> 3mm di setiap sisi untuk area potong agar hasil cetak tidak ada tepi putih.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const priceMaster = {
+                '150gsm': {
+                    'A3': {
+                        '1 Sisi': {
+                            min: 100,
+                            price: 2750
+                        },
+                        '2 Sisi': {
+                            min: 100,
+                            price: 3900
+                        },
+                        '1 Sisi + Lam 1 Sisi': {
+                            min: 100,
+                            price: 4000
+                        },
+                        '2 Sisi + Lam 1 Sisi': {
+                            min: 100,
+                            price: 5150
+                        },
+                        '2 Sisi + Lam 2 Sisi': {
+                            available: !1
+                        }
+                    },
+                    'A4': {
+                        '1 Sisi': {
+                            min: 200,
+                            price: 1425
+                        },
+                        '2 Sisi': {
+                            min: 200,
+                            price: 2000
+                        },
+                        '1 Sisi + Lam 1 Sisi': {
+                            min: 200,
+                            price: 2050
+                        },
+                        '2 Sisi + Lam 1 Sisi': {
+                            min: 200,
+                            price: 2625
+                        },
+                        '2 Sisi + Lam 2 Sisi': {
+                            available: !1
+                        }
+                    },
+                    'DL': {
+                        '1 Sisi': {
+                            min: 300,
+                            price: 792
+                        },
+                        '2 Sisi': {
+                            min: 300,
+                            price: 808
+                        },
+                        '1 Sisi + Lam 1 Sisi': {
+                            min: 300,
+                            price: 1000
+                        },
+                        '2 Sisi + Lam 1 Sisi': {
+                            min: 300,
+                            price: 1000
+                        },
+                        '2 Sisi + Lam 2 Sisi': {
+                            available: !1
+                        }
+                    }
+                },
+                '210gsm': {
+                    'A3': {
+                        '1 Sisi': {
+                            min: 100,
+                            price: 3000
+                        },
+                        '2 Sisi': {
+                            min: 100,
+                            price: 4500
+                        },
+                        '1 Sisi + Lam 1 Sisi': {
+                            min: 100,
+                            price: 4250
+                        },
+                        '2 Sisi + Lam 1 Sisi': {
+                            min: 100,
+                            price: 5750
+                        },
+                        '2 Sisi + Lam 2 Sisi': {
+                            min: 100,
+                            price: 7000
+                        }
+                    },
+                    'A4': {
+                        '1 Sisi': {
+                            min: 200,
+                            price: 1550
+                        },
+                        '2 Sisi': {
+                            min: 200,
+                            price: 2300
+                        },
+                        '1 Sisi + Lam 1 Sisi': {
+                            min: 200,
+                            price: 2175
+                        },
+                        '2 Sisi + Lam 1 Sisi': {
+                            min: 200,
+                            price: 2925
+                        },
+                        '2 Sisi + Lam 2 Sisi': {
+                            min: 200,
+                            price: 3550
+                        }
+                    },
+                    'DL': {
+                        '1 Sisi': {
+                            min: 300,
+                            price: 642
+                        },
+                        '2 Sisi': {
+                            min: 300,
+                            price: 892
+                        },
+                        '1 Sisi + Lam 1 Sisi': {
+                            min: 300,
+                            price: 850
+                        },
+                        '2 Sisi + Lam 1 Sisi': {
+                            min: 300,
+                            price: 1100
+                        },
+                        '2 Sisi + Lam 2 Sisi': {
+                            min: 300,
+                            price: 1308
+                        }
+                    }
+                }
+            };
+            const productData = {
+                'A3-flat': {
+                    source: 'A3',
+                    info: 'Brosur lembaran tanpa lipatan.',
+                    isFolded: false,
+                    image: 'a3.png'
+                },
+                'A4-flat': {
+                    source: 'A4',
+                    info: 'Brosur lembaran tanpa lipatan.',
+                    isFolded: false,
+                    image: 'a4.png'
+                },
+                'DL-flat': {
+                    source: 'DL',
+                    info: 'Flyer/brosur lembaran tanpa lipatan.',
+                    isFolded: false,
+                    image: 'dl.png'
+                },
+                'A3-lipat2': {
+                    source: 'A3',
+                    info: 'Dicetak di kertas A3, dilipat jadi A4.',
+                    isFolded: true,
+                    image: 'a3.png'
+                },
+                'A4-lipat2': {
+                    source: 'A4',
+                    info: 'Dicetak di kertas A4, dilipat jadi A5.',
+                    isFolded: true,
+                    image: 'a4.png'
+                },
+                'A4-lipat3': {
+                    source: 'A4',
+                    info: 'Dicetak di kertas A4, dilipat 3 jadi DL.',
+                    isFolded: true,
+                    image: 'dl.png'
+                }
+            };
+
+            const inputs = {
+                nama: document.getElementById('nama'),
+                kontak: document.getElementById('kontak'),
+                produk: document.getElementById('produk'),
+                bahan: document.getElementById('bahan'),
+                spesifikasi: document.getElementById('spesifikasi'),
+                jumlah: document.getElementById('jumlah')
+            };
+            const display = {
+                brochureImage: document.getElementById('brochureImage'),
+                summaryContent: document.getElementById('summaryContent'),
+                totalHarga: document.getElementById('totalHarga'),
+                orderButton: document.getElementById('orderButton'),
+                warning: document.getElementById('minOrderWarning')
+            };
+
+            function formatRupiah(num) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(num);
+            }
+
+            function updateUI() {
+                const produkValue = inputs.produk.value;
+                const currentProduct = productData[produkValue];
+                display.brochureImage.src = currentProduct.image;
+                display.brochureImage.alt = produkValue;
+
+                const sourcePaper = currentProduct.source;
+                const availableSpecs = priceMaster[inputs.bahan.value][sourcePaper];
+                inputs.spesifikasi.innerHTML = '';
+
+                for (const specName in availableSpecs) {
+                    const specDetails = availableSpecs[specName];
+                    if (specDetails.available === false) continue;
+                    if (currentProduct.isFolded && !specName.includes('2 Sisi')) continue;
+
+                    const option = document.createElement('option');
+                    option.value = specName;
+                    option.textContent = specName;
+                    inputs.spesifikasi.appendChild(option);
+                }
+                calculateAndDisplay();
+            }
+
+            function calculateAndDisplay() {
+                const produkValue = inputs.produk.value;
+                const currentProduct = productData[produkValue];
+                const sourcePaper = currentProduct.source;
+                const specValue = inputs.spesifikasi.value;
+                const specData = priceMaster[inputs.bahan.value]?.[sourcePaper]?.[specValue];
+
+                if (!specData) {
+                    display.summaryContent.innerHTML = `<p style="text-align:center;color:var(--dark-gray);">Pilihan tidak valid.</p>`;
+                    display.totalHarga.textContent = formatRupiah(0);
+                    return;
+                }
+
+                const qty = parseInt(inputs.jumlah.value) || 0;
+                const total = qty * specData.price;
+
+                display.summaryContent.innerHTML = `
+                <div class="summary-item"><span class="label">Produk:</span><span class="value">${inputs.produk.options[inputs.produk.selectedIndex].text}</span></div>
+                <div class="summary-info">${currentProduct.info}</div>
+                <div class="summary-item"><span class="label">Bahan:</span><span class="value">${inputs.bahan.options[inputs.bahan.selectedIndex].text}</span></div>
+                <div class="summary-item"><span class="label">Finishing:</span><span class="value">${specValue}</span></div>
+                <div class="summary-item"><span class="label">Jumlah:</span><span class="value">${qty.toLocaleString('id-ID')} pcs</span></div>
+                <div class="summary-item"><span class="label">Harga /pcs:</span><span class="value">${formatRupiah(specData.price)}</span></div>`;
+                display.totalHarga.textContent = formatRupiah(total);
+
+                const isDataLengkap = inputs.nama.value.trim() !== '' && inputs.kontak.value.trim() !== '';
+                let isMinOrderMet = true;
+
+                if (qty > 0 && qty < specData.min) {
+                    display.warning.textContent = `Peringatan: Minimum order untuk produk ini adalah ${specData.min} pcs.`;
+                    display.warning.classList.add('show');
+                    isMinOrderMet = false;
+                } else {
+                    display.warning.textContent = '';
+                    display.warning.classList.remove('show');
+                }
+
+                if (isDataLengkap && isMinOrderMet && total > 0) {
+                    display.orderButton.disabled = false;
+                    display.orderButton.textContent = 'Order via WhatsApp';
+                } else {
+                    display.orderButton.disabled = true;
+                    if (!isDataLengkap) {
+                        display.orderButton.textContent = 'Lengkapi Data Dulu';
+                    } else if (!isMinOrderMet) {
+                        display.orderButton.textContent = 'Jumlah Order Kurang';
+                    } else {
+                        display.orderButton.textContent = 'Lengkapi Form';
+                    }
+                }
+            }
+
+            function handleOrder() {
+                const number = '628975733369';
+                const produkValue = inputs.produk.value;
+                const sourcePaper = productData[produkValue].source;
+                const specValue = inputs.spesifikasi.value;
+                const specData = priceMaster[inputs.bahan.value]?.[sourcePaper]?.[specValue];
+                const total = (parseInt(inputs.jumlah.value) || 0) * specData.price;
+
+                const msg = `
+Halo, saya ingin memesan cetak brosur:
+-----------------------------------
+*DATA PEMESAN*
+Nama: *${inputs.nama.value}*
+Kontak: *${inputs.kontak.value}*
+-----------------------------------
+*DETAIL PESANAN*
+Produk: *${inputs.produk.options[inputs.produk.selectedIndex].text}*
+Bahan: *${inputs.bahan.options[inputs.bahan.selectedIndex].text}*
+Finishing: *${specValue}*
+Jumlah: *${inputs.jumlah.value} pcs*
+-----------------------------------
+*TOTAL HARGA: ${formatRupiah(total)}*
+
+Mohon untuk segera diproses. Terima kasih!`.trim();
+                const url = `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank');
+            }
+
+            // --- BAGIAN YANG DIPERBAIKI ---
+            // Listener yang lebih spesifik untuk setiap input
+
+            // Input yang membangun ulang UI
+            inputs.produk.addEventListener('change', updateUI);
+            inputs.bahan.addEventListener('change', updateUI);
+
+            // Input yang hanya melakukan kalkulasi
+            inputs.spesifikasi.addEventListener('change', calculateAndDisplay);
+            inputs.jumlah.addEventListener('input', calculateAndDisplay);
+            inputs.nama.addEventListener('input', calculateAndDisplay);
+            inputs.kontak.addEventListener('input', calculateAndDisplay);
+
+            display.orderButton.addEventListener('click', handleOrder);
+
+            // Inisialisasi awal
+            updateUI();
+        });
+    </script>
+</body>
+
+</html>

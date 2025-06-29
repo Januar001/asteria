@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Brosur Profesional | Cepat, Murah & Berkualitas</title>
+    <meta name="description" content="Jasa cetak brosur, flyer, dan media promosi berkualitas tinggi dengan harga transparan. Cek harga langsung dengan kalkulator online kami dan pesan sekarang!">
+    <style>
+        /* Import Font (Opsional) */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        /* Variabel Warna & Pengaturan Dasar */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --light-gray: #f4f7f9;
+            --white: #ffffff;
+            --text-color: #34495e;
+            --heading-font-weight: 700;
+            --body-font-weight: 400;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: var(--white);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Tombol Global */
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-lg {
+            padding: 15px 35px;
+            font-size: 1.1em;
+        }
+
+        /* Header & Navigasi */
+        .header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 80px;
+        }
+
+        .nav-logo img {
+            height: 40px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        .hero-title {
+            font-size: 2.8em;
+            color: var(--primary-color);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2em;
+            color: var(--text-color);
+            margin-bottom: 30px;
+        }
+
+        /* Sections Global */
+        .section-title {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .features-section,
+        .services-section,
+        .cta-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-section,
+        .cta-section {
+            background-color: var(--light-gray);
+        }
+
+        /* Keunggulan */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .feature-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Layanan */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-color: var(--white);
+            text-align: left;
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .service-card h4 {
+            font-size: 1.4em;
+            color: var(--primary-color);
+            margin: 20px 20px 10px;
+        }
+
+        .service-card p {
+            margin: 0 20px 20px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: #bdc3c7;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .footer-about,
+        .footer-contact {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .footer-logo {
+            height: 40px;
+            margin-bottom: 15px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-contact h4 {
+            color: var(--white);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+
+        .footer-contact a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+
+            .nav-menu,
+            .nav-btn {
+                display: none;
+                /* Sembunyikan untuk mobile, bisa diganti burger menu */
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#" class="nav-logo"><img src="img/logo.png" alt="Logo Percetakan"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#layanan" class="nav-link">Layanan</a></li>
+                <li class="nav-item"><a href="#keunggulan" class="nav-link">Keunggulan</a></li>
+                <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+            </ul>
+            <a href="order_brosur.html" class="btn btn-primary nav-btn">Cek Harga & Order</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Cetak Brosur Profesional, Cepat, dan Terjangkau</h1>
+                <p class="hero-subtitle">Wujudkan media promosi impian Anda dengan kualitas cetak terbaik. Harga transparan, proses mudah. Cek harga dalam hitungan detik!</p>
+                <a href="order_brosur.html" class="btn btn-success btn-lg">Hitung Harga Sekarang →</a>
+            </div>
+            <div class="hero-image">
+                <img src="img/hero-image.jpg" alt="Contoh aneka brosur berkualitas">
+            </div>
+        </section>
+
+        <section id="keunggulan" class="features-section">
+            <h2 class="section-title">Kenapa Memilih Kami?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>💎 Kualitas Terbaik</h3>
+                    <p>Menggunakan mesin cetak modern dan bahan Art Paper premium untuk hasil warna yang tajam dan detail sempurna.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🧮 Harga Transparan</h3>
+                    <p>Tidak ada biaya tersembunyi. Gunakan kalkulator online kami untuk mengetahui harga pasti sebelum memesan.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚀 Proses Cepat</h3>
+                    <p>Kami memahami kebutuhan bisnis Anda. Proses produksi yang efisien memastikan pesanan Anda selesai tepat waktu.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💬 Layanan Bantuan</h3>
+                    <p>Tim kami siap membantu Anda, mulai dari konsultasi bahan hingga konfirmasi pesanan via WhatsApp.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="layanan" class="services-section">
+            <h2 class="section-title">Apapun Kebutuhan Promosi Anda</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="img/flyer.jpg" alt="Cetak Flyer">
+                    <h4>Brosur Tanpa Lipat (Flyer)</h4>
+                    <p>Sempurna untuk promosi cepat, selebaran acara, atau menu sederhana. Tersedia dalam ukuran A4, A3, dan DL.</p>
+                </div>
+                <div class="service-card">
+                    <img src="img/bifold.jpg" alt="Cetak Brosur Lipat 2">
+                    <h4>Brosur Lipat 2 (Bi-Fold)</h4>
+                    <p>Cocok untuk company profile, presentasi produk, atau daftar menu yang lebih detail. Memberi kesan eksklusif.</p>
+                </div>
+                <div class="service-card">
+                    <img src="img/trifold.jpg" alt="Cetak Brosur Lipat 3">
+                    <h4>Brosur Lipat 3 (Tri-Fold)</h4>
+                    <p>Jenis brosur paling populer untuk menyajikan banyak informasi secara ringkas dan terstruktur. Ideal untuk pariwisata, properti, dll.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Siap Membuat Brosur Impian Anda?</h2>
+            <p>Jangan tunda lagi. Dapatkan estimasi harga instan dan akurat untuk kebutuhan cetak Anda.</p>
+            <a href="order_brosur.html" class="btn btn-success btn-lg">Mulai Hitung Harga di Sini</a>
+        </section>
+    </main>
+
+    <footer id="kontak" class="footer">
+        <div class="footer-content">
+            <div class="footer-about">
+                <img src="img/logo.png" alt="Logo Percetakan" class="footer-logo">
+                <p>Percetakan modern yang berkomitmen memberikan kualitas dan layanan terbaik untuk semua kebutuhan promosi bisnis Anda di Sidoarjo dan sekitarnya.</p>
+            </div>
+            <div class="footer-contact">
+                <h4>Hubungi Kami</h4>
+                <p>📍 Jl. Contoh Alamat No. 123, Sidoarjo, Jawa Timur</p>
+                <p>📱 WhatsApp: <a href="https://wa.me/628975733369">0897-5733-3369</a></p>
+                <p>✉️ Email: <a href="mailto:order@namabisnis.com">order@namabisnis.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Nama Bisnis Anda. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script untuk membuat header menjadi 'sticky' saat di-scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+
+</html>
